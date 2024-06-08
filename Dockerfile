@@ -4,5 +4,5 @@ COPY . .
 RUN apt-get update && \
     apt-get install -y libpng-dev && \
     docker-php-ext-install pdo pdo_mysql gd
-EXPOSE 80
+EXPOSE 8080
 CMD ["apache2-foreground"]
