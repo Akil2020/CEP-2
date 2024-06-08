@@ -35,6 +35,22 @@ protocol    = "-1"
 cidr_blocks = ["0.0.0.0/0"]
 }
 }
-output "instance_public_ip" {
-value = aws_instance.jenkins_server.public_ip
+resource "aws_instance" "k8s-node1" {
+  ami           = var.ami_id
+  instance_type = var.instance_type
+  key_name      = var.key_name
+
+  tags = {
+    Name = "k8s-node1"
+  }
+
+  security_groups = [aws_security_group.jenkins_sg.name]
+}
+
+output "JenkinsServer_Public_IP" {
+  value = aws_instance.jenkins_server.public_ip
+}
+
+output "k8s-node1_Public_IP" {
+  value = aws_instance.k8s-node1.public_ip
 }

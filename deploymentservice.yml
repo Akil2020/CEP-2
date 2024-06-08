@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapp-k8s-deployment
+spec:
+  selector:
+    matchLabels:
+      app: webapp-k8s
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: webapp-k8s
+    spec:
+      containers:
+        - name: webapp-k8s
+          image: akil1991/achistarwebapp:v1 
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+
+
+---
+
+apiVersion: v1
+kind: Service 
+metadata:
+  name: webapp-k8s-svc
+spec:
+  selector:
+    app: webapp-k8s
+  ports:
+    - protocol: "TCP"
+      port: 8080
+      targetPort: 8081
+  type: NodePort
